@@ -8,8 +8,7 @@ class CartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print( Provider.of<CartProvider>(context).cart);
-    final cart = Provider.of<CartProvider>(context).cart;
+    final cart = context.watch<CartProvider>().cart;
 
     return SafeArea(
       child: Column(
@@ -35,7 +34,26 @@ class CartPage extends StatelessWidget {
                   ),
                   trailing: IconButton(
                     onPressed: () {
-                      Provider.of<CartProvider>(context, listen: false).removeProduct(cartItem);
+                     showDialog(
+
+                         context: context,
+                         builder: (context)  {
+                       return  AlertDialog(
+
+                         title: Text('Delete Product', style: Theme.of(context).textTheme.titleMedium),
+                         content: const Text('Are you sure you want to remove this product on your cart?'),
+                         actions: [
+                           TextButton(onPressed: () {
+                             Navigator.of(context).pop();
+                           }, child: Text('No', style: TextStyle(color: Colors.blue),)),
+                           TextButton(onPressed: () {
+                             context.read<CartProvider>().removeProduct(cartItem);
+                             Navigator.of(context).pop();
+                             ScaffoldMessenger.of(context).showSnackBar( const SnackBar(content: Text('Product removed successfullly!')));
+                           }, child: Text('Yes', style: TextStyle(color: Colors.red),))
+                         ],
+                       );
+                     });
                     },
                     icon: const Icon(Icons.delete, color: Colors.red),
                   ),

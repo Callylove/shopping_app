@@ -10,6 +10,6 @@ void addProduct (Map<String, dynamic> product) {
 
 void removeProduct (Map<String, dynamic> product) {
   cart.remove(product);
-  notifyListeners();
+
 }
 }
