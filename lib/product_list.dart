@@ -28,12 +28,14 @@ class _ProductListState extends State<ProductList> {
         ),
         borderRadius: BorderRadius.horizontal(left: Radius.circular(50))
     );
-    return SafeArea(
+    return Scaffold(
+      
+      body: SafeArea(
         child: Column(
           children: [
             Row(
               children: [
-
+        
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child:  Text('Shoes\nCollection', style: Theme.of(context).textTheme.titleLarge,),
@@ -45,7 +47,7 @@ class _ProductListState extends State<ProductList> {
                       border: border,
                       enabledBorder: border,
                       focusedBorder: border
-
+        
                   ),
                 ))
               ],
@@ -77,7 +79,7 @@ class _ProductListState extends State<ProductList> {
                           shape:  RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30)
                           ),
-
+        
                           padding: const  EdgeInsets.symmetric(horizontal: 20, vertical: 15),),
                       ),
                     );
@@ -102,15 +104,17 @@ class _ProductListState extends State<ProductList> {
                         price: product['price'] as double,
                         image: product['imageUrl'] as String,
                         backgroundColor: index.isEven ? const Color.fromRGBO(216, 240, 253, 1) : const Color.fromRGBO(245, 247, 249, 1),
-
+        
                       ),
                     );
-
+        
                   }
               ),
             )
-
+        
           ],
-        ));
+        ),
+      ),
+    );
   }
 }

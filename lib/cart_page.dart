@@ -10,16 +10,17 @@ class CartPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final cart = context.watch<CartProvider>().cart;
 
-    return SafeArea(
-      child: Column(
+    return Scaffold(
+      appBar: AppBar(
+        title:  Text(
+          'Cart',
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        centerTitle: true,
+      ),
+      body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Text(
-              'Cart',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-          ),
+
           Expanded(
             child: ListView.builder(
               itemCount: cart.length,
