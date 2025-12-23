@@ -13,22 +13,37 @@ class ProductDetailsPage extends StatefulWidget {
 
 class _ProductDetailsPageState extends State<ProductDetailsPage> {
   int selectedSize = 0;
-  void onTab () {
-    if (selectedSize != 0) {
-      Provider.of<CartProvider>(context, listen: false).addProduct( {
-        'id': widget.product['id'],
-        'company': widget.product['company'],
-        'title': widget.product['title'],
-        'price': widget.product['price'],
-        'sizes': selectedSize,
-        'imageUrl': widget.product['imageUrl']
-      });
-      ScaffoldMessenger.of(context).showSnackBar( const SnackBar(content: Text('Product added successfullly!')));
-    }else {
-      ScaffoldMessenger.of(context).showSnackBar( const SnackBar(content: Text('Please select a size!')));
+  void onTab() {
+    if (selectedSize == 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please select a size!')),
+      );
+      return;
     }
 
+    final cartProvider = Provider.of<CartProvider>(context, listen: false);
+
+    if (cartProvider.isInCart(widget.product['id'] as String)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Product already in cart')),
+      );
+      return;
+    }
+
+    cartProvider.addProduct({
+      'id': widget.product['id'],
+      'company': widget.product['company'],
+      'title': widget.product['title'],
+      'price': widget.product['price'],
+      'sizes': selectedSize,
+      'imageUrl': widget.product['imageUrl'],
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Product added successfully!')),
+    );
   }
+
 
   @override
   Widget build(BuildContext context) {
